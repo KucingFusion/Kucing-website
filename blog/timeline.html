@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>个人博客</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    body { max-width: 800px; margin: 2rem auto; padding: 1rem; }
+    .timeline { position: relative; margin: 2rem 0; }
+    .timeline::before { content: ""; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: #ccc; }
+    .timeline-item { position: relative; margin-bottom: 2rem; padding-left: 50px; }
+    .timeline-dot { position: absolute; left: 12px; top: 10px; width: 16px; height: 16px; background: #2196f3; border-radius: 50%; border: 2px solid #fff; }
+    .timeline-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem; }
+    .timeline-desc { color: #555; margin-bottom: 0.5rem; }
+    .timeline-link { color: #2196f3; text-decoration: underline; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>博客</h2>
+  <div class="timeline" id="timeline"></div>
+
+  <script>
+    fetch("posts.json")
+      .then(res => res.json())
+      .then(posts => {
+        // 去重（只保留第一篇同名博客）
+        const seen = new Set();
+        const uniquePosts = posts.filter(post => {
+          if(seen.has(post.title)) return false;
+          seen.add(post.title);
+          return true;
+        });
+
+        const timeline = document.getElementById("timeline");
+        uniquePosts.forEach((post, idx) => {
+          const item = document.createElement("div");
+          item.className = "timeline-item";
+          item.innerHTML = `
+            <div class="timeline-dot"></div>
+            <div class="timeline-title">${post.title}</div>
+            <div class="timeline-date" style="color:#888;font-size:0.95em;margin-bottom:0.5rem;">
+              ${post.date ? post.date : ""}
+            </div>
+            <div class="timeline-desc">${post.desc}</div>
+            <a class="timeline-link" href="blog-viewer.html?file=${post.file}" target="_blank">阅读详情</a>
+          `;
+          timeline.appendChild(item);
+        });
+      });
+  </script>
+</body>
+</html>

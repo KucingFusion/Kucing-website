@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>博客阅读</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    body { max-width: 800px; margin: 2rem auto; padding: 1rem; line-height: 1.6; }
+    pre { background: #f4f4f4; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+    code { background: #eee; padding: 2px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div id="content">加载中...</div>
+
+  <!-- 引入 marked.js (Markdown 渲染器) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    // 获取 URL 参数中的 ?file=xxx.md
+    const params = new URLSearchParams(window.location.search);
+    const file = params.get('file') || '';
+
+    if(file){
+      fetch(file)
+        .then(res => res.text())
+        .then(md => {
+          document.getElementById('content').innerHTML = marked.parse(md);
+        })
+        .catch(err => {
+          document.getElementById('content').innerHTML = "❌ 加载失败: " + err;
+        });
+    } else {
+      document.getElementById('content').innerHTML = "❌ 未指定博客文件";
+    }
+  </script>
+</body>
+</html>

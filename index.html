@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cn">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -47,9 +47,9 @@
               </a>
             </li>
             <li class="nav__item">
-              <a href="#skills" class="nav__link">
+              <a href="#blog" class="nav__link">
                 <i class="uil uil-file-alt nav__icon"></i>
-                <p i18n="skills">Skills</p>
+                <p i18n="blog">blog</p>
               </a>
             </li>
             <li class="nav__item">
@@ -403,6 +403,49 @@
         </div>
       </section>
 
+      
+      <!--==================== BLOG ====================-->
+      <section class="blog section" id="blog">
+        <h2 class="section__title">博客</h2>
+        <span class="section__subtitle">
+          <a href="blog/timeline.html" style="color:inherit;text-decoration:underline;cursor:pointer;">
+            我的博客分享
+          </a>
+        </span>
+
+        <div class="blog__container container" id="blog__list">
+          <!-- JS 动态插入博客列表 -->
+        </div>
+      </section>
+
+      <script>
+        // 动态加载 blog/posts.json
+        fetch("blog/posts.json")
+          .then(res => res.json())
+          .then(posts => {
+            const container = document.getElementById("blog__list");
+            const ul = document.createElement("ul");
+            ul.className = "blog__list";
+            posts.forEach(post => {
+              const li = document.createElement("li");
+              li.className = "blog__list-item";
+              li.innerHTML = `
+                <h3 class="blog__title">${post.title}</h3>
+                <p class="blog__description">${post.desc}</p>
+                
+              `;
+              // 让整条 li 可点击
+              li.style.cursor = "pointer";
+              li.onclick = () => {
+                window.open(`blog/blog-viewer.html?file=${post.file}`, "_blank");
+              };
+              ul.appendChild(li);
+            });
+            container.appendChild(ul);
+          });
+      </script>
+
+
       <!--==================== PORTFOLIO ====================-->
       <section class="portfolio section" id="portfolio">
         <h2 class="section__title" i18n="portfolio__title">Portfolio</h2>
@@ -562,7 +605,6 @@
           </div>
         </div>
       </section>
-    </main>
 
     <!--==================== FOOTER ====================-->
     <footer class="footer">

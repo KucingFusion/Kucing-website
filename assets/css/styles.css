@@ -1162,3 +1162,50 @@ img {
       grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/*==================== BLOG ====================*/
+/* 博客列表外层容器样式 */
+.blog__container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 24px;
+  max-height: 400px; /* 可根据需要调整高度 */
+  overflow-y: auto;
+}
+
+/* 列表本身样式 */
+.blog__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 单个博客项样式 */
+/* 鼠标悬停时高亮并显示手型 */
+.blog__list-item {
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.blog__list-item:hover {
+  background: #f7f7f7;
+}
+
+.blog__list-item:last-child {
+  border-bottom: none;
+}
+
+.blog__title {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.blog__description {
+  margin: 0 0 8px 0;
+  color: #666;
+}
+
+.blog__button {
+  margin-top: 4px;
+}
